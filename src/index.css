@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#030014] text-slate-100 font-sans selection:bg-neon-purple/30 selection:text-neon-blue;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-panel-hover {
+    @apply transition-all duration-300 hover:bg-white/[0.05] hover:border-neon-purple/50;
+  }
+
+  .neon-text-blue {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+  }
+
+  .neon-text-purple {
+    text-shadow: 0 0 10px rgba(189, 0, 255, 0.5), 0 0 20px rgba(189, 0, 255, 0.2);
+  }
+
+  .neon-text-pink {
+    text-shadow: 0 0 10px rgba(255, 0, 122, 0.5), 0 0 20px rgba(255, 0, 122, 0.2);
+  }
+
+  .neon-border-blue {
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+    border-color: rgba(0, 240, 255, 0.4);
+  }
+
+  .neon-border-purple {
+    box-shadow: 0 0 15px rgba(189, 0, 255, 0.25);
+    border-color: rgba(189, 0, 255, 0.4);
+  }
+
+  .neon-border-pink {
+    box-shadow: 0 0 15px rgba(255, 0, 122, 0.25);
+    border-color: rgba(255, 0, 122, 0.4);
+  }
+
+  /* Custom grid overlay background */
+  .bg-grid-pattern {
+    background-size: 50px 50px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  }
+}
+
+/* Custom styles for canvas and Three.js */
+.webgl-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Smooth Scrolling snap effect */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for element carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

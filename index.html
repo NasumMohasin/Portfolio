@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Nasum Mohasin | Creative Graphic Designer & Mobile Video Editor</title>
+  <meta name="title" content="Nasum Mohasin | Creative Graphic Designer & Mobile Video Editor" />
+  <meta name="description" content="Portfolio of Nasum Mohasin, creative graphic designer and mobile video editor specializing in premium visual content, poster design, and reels editing." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- GSAP for Smooth Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Styling Overrides */
+    html, body {
+      background-color: #030014;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030014;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #bd00ff, #00f0ff);
+      border-radius: 9999px;
+      border: 2px solid #030014;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff007a, #bd00ff);
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .neon-text-blue {
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+    }
+
+    .neon-text-purple {
+      text-shadow: 0 0 10px rgba(189, 0, 255, 0.5), 0 0 20px rgba(189, 0, 255, 0.2);
+    }
+
+    .neon-text-pink {
+      text-shadow: 0 0 10px rgba(255, 0, 122, 0.5), 0 0 20px rgba(255, 0, 122, 0.2);
+    }
+
+    .bg-grid-pattern {
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    /* Hide scrollbars for carousel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              bg: '#030014',
+              card: 'rgba(255, 255, 255, 0.03)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              hover: 'rgba(255, 255, 255, 0.06)',
+            },
+            neon: {
+              blue: '#00f0ff',
+              purple: '#bd00ff',
+              pink: '#ff007a',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-slow': 'float-slow 8s ease-in-out infinite',
+            'float-fast': 'float-fast 4s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 12s linear infinite',
+            'marquee': 'marquee 25s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-15px) rotate(1deg)' },
+            },
+            'float-slow': {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-25px) rotate(-2deg)' },
+            },
+            'float-fast': {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-8px) rotate(0.5deg)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased text-slate-100 bg-[#030014] selection:bg-neon-purple/30 selection:text-neon-blue">
+
+  <!-- Interactive Particles Canvas Background -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-[1] w-full h-full opacity-60"></canvas>
+
+  <!-- Ambient Glow Filters -->
+  <div class="pointer-events-none fixed -top-[40%] -left-[20%] z-0 h-[80%] w-[60%] rounded-full bg-gradient-to-br from-neon-blue/15 to-transparent blur-[150px]"></div>
+  <div class="pointer-events-none fixed -bottom-[30%] -right-[10%] z-0 h-[70%] w-[50%] rounded-full bg-gradient-to-tl from-neon-purple/15 to-transparent blur-[150px]"></div>
+
+  <!-- 1. Cinematic Preloader -->
+  <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#030014] text-white transition-opacity duration-700 ease-in-out">
+    <div class="absolute w-[400px] h-[400px] bg-neon-purple/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="relative flex flex-col items-center max-w-xs text-center">
+      <div class="relative w-24 h-24 mb-8">
+        <!-- Spinning Ring 1 -->
+        <div class="absolute inset-0 border-2 border-transparent border-t-neon-blue border-r-neon-blue rounded-full animate-[spin_2.5s_linear_infinite]"></div>
+        <!-- Spinning Ring 2 -->
+        <div class="absolute inset-2 border border-transparent border-b-neon-purple border-l-neon-purple rounded-full animate-[spin_1.8s_linear_infinite_reverse]"></div>
+        <!-- Center Core Glow -->
+        <div class="absolute inset-6 bg-gradient-to-tr from-neon-purple to-neon-blue rounded-lg blur-[2px] opacity-70 animate-pulse"></div>
+        <div class="absolute inset-7 bg-[#030014] rounded-lg flex items-center justify-center">
+          <span class="font-display font-bold text-xl text-neon-blue">NM</span>
+        </div>
+      </div>
+      <h1 class="font-display text-2xl font-bold tracking-[0.2em] uppercase text-white mb-2">Nasum Mohasin</h1>
+      <p class="font-sans text-xs tracking-[0.3em] uppercase text-slate-400 mb-6">Portfolio Experience</p>
+      
+      <!-- Loading Progress bar -->
+      <div class="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+        <div id="loader-progress" class="h-full bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink w-0 transition-all duration-300"></div>
+      </div>
+      <span id="loader-percent" class="font-display font-light text-sm text-neon-blue mt-3">0%</span>
+    </div>
+  </div>
+
+  <div id="app-content" class="relative z-10 flex flex-col min-h-screen hidden">
+    <!-- 2. Sticky Glassmorphic Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-500 bg-transparent py-6">
+      <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-tr from-neon-purple to-neon-blue p-[1px] shadow-[0_0_15px_rgba(189,0,255,0.2)] transition-all duration-300">
+            <div class="w-full h-full bg-[#030014] rounded-lg flex items-center justify-center">
+              <span class="font-display font-bold text-base tracking-wider text-white">NM</span>
+            </div>
+          </div>
+          <span class="font-display font-bold text-lg tracking-widest uppercase text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-neon-blue group-hover:to-neon-purple transition-all duration-300">
+            Nasum Mohasin
+          </span>
+        </a>
+
+        <!-- Links -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#home" class="font-sans text-sm font-medium tracking-wide text-slate-300 hover:text-neon-blue transition-all duration-300 relative py-1 group">
+            Home
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-neon-blue to-neon-purple group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a href="#about" class="font-sans text-sm font-medium tracking-wide text-slate-300 hover:text-neon-blue transition-all duration-300 relative py-1 group">
+            About
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-neon-blue to-neon-purple group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a href="#portfolio" class="font-sans text-sm font-medium tracking-wide text-slate-300 hover:text-neon-blue transition-all duration-300 relative py-1 group">
+            Portfolio
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-neon-blue to-neon-purple group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a href="#services" class="font-sans text-sm font-medium tracking-wide text-slate-300 hover:text-neon-blue transition-all duration-300 relative py-1 group">
+            Services
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-neon-blue to-neon-purple group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a href="#contact" class="font-sans text-sm font-medium tracking-wide text-slate-300 hover:text-neon-blue transition-all duration-300 relative py-1 group">
+            Contact
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-neon-blue to-neon-purple group-hover:w-full transition-all duration-300"></span>
+          </a>
+        </nav>
+
+        <div class="hidden md:block">
+          <a href="https://wa.me/916305681693" target="_blank" rel="noopener noreferrer" class="relative inline-flex items-center gap-2 px-6 py-2 rounded-full overflow-hidden border border-neon-blue/30 hover:border-neon-blue transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.05)] hover:shadow-[0_0_25px_rgba(0,240,255,0.25)]">
+            <span class="font-sans text-xs font-semibold tracking-wider text-white uppercase relative z-10 flex items-center gap-1">
+              Hire Me <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </a>
+        </div>
+
+        <button id="mobile-toggle" class="md:hidden text-white hover:text-neon-blue transition-colors focus:outline-none">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Mobile drawer -->
+      <div id="mobile-drawer" class="hidden md:hidden border-b border-white/5 bg-[#030014]/95 backdrop-blur-lg absolute top-full left-0 w-full">
+        <div class="px-6 py-8 flex flex-col gap-6">
+          <a href="#home" class="drawer-link font-sans text-base font-medium text-slate-300">Home</a>
+          <a href="#about" class="drawer-link font-sans text-base font-medium text-slate-300">About</a>
+          <a href="#portfolio" class="drawer-link font-sans text-base font-medium text-slate-300">Portfolio</a>
+          <a href="#services" class="drawer-link font-sans text-base font-medium text-slate-300">Services</a>
+          <a href="#contact" class="drawer-link font-sans text-base font-medium text-slate-300">Contact</a>
+          <a href="https://wa.me/916305681693" target="_blank" class="w-full text-center py-3 rounded-xl border border-neon-blue bg-neon-blue/10 text-white font-sans text-sm font-semibold tracking-wider uppercase flex items-center justify-center gap-2">
+            Hire Me <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      
+      <!-- 3. Hero Section -->
+      <section id="home" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-grid-pattern">
+        
+        <!-- Three.js Canvas Container -->
+        <div id="hero-three-canvas" class="absolute inset-0 z-0 h-full w-full pointer-events-none opacity-60 hidden md:block"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+          
+          <!-- Hero Copy -->
+          <div class="lg:col-span-7 flex flex-col items-start text-left hero-text">
+            <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-neon-blue animate-pulse"></i>
+              <span class="font-display font-medium text-xs tracking-wider text-slate-300">
+                Welcome to the Future of Creative Design
+              </span>
+            </div>
+
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+              I Create <br>
+              <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink">
+                Premium Visuals
+              </span> <br>
+              &amp; Cinematic Motion
+            </h1>
+
+            <p class="font-sans text-base sm:text-lg text-slate-300 max-w-xl mb-8 leading-relaxed">
+              Hi, I'm <strong class="text-white font-semibold">Nasum Mohasin</strong>. A creative graphic designer and mobile video editor based in India. I specialize in turning ideas into high-impact social media designs, reels, and visual branding.
+            </p>
+
+            <div class="flex flex-wrap gap-4 items-center">
+              <a href="#portfolio" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-white font-sans text-sm font-semibold tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all duration-300">
+                View Portfolio <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+              <a href="https://wa.me/916305681693" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass-panel text-white font-sans text-sm font-semibold tracking-wider uppercase hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300">
+                Hire Me
+              </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex items-center gap-6 mt-12 border-t border-white/5 pt-8 w-full max-w-md">
+              <div class="flex flex-col">
+                <span class="font-display font-bold text-2xl text-white flex items-center gap-1.5">
+                  <i data-lucide="pen-tool" class="w-4 h-4 text-neon-blue"></i> 50+
+                </span>
+                <span class="font-sans text-xs tracking-wider text-slate-400 mt-1 uppercase">Designs Delivered</span>
+              </div>
+              <div class="w-[1px] h-8 bg-white/10"></div>
+              <div class="flex flex-col">
+                <span class="font-display font-bold text-2xl text-white flex items-center gap-1.5">
+                  <i data-lucide="video" class="w-4 h-4 text-neon-purple"></i> 100k+
+                </span>
+                <span class="font-sans text-xs tracking-wider text-slate-400 mt-1 uppercase">Reels Views</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Profile Card (3D Tilt effect via CSS/JS) -->
+          <div class="lg:col-span-5 flex justify-center items-center">
+            <div id="tilt-card-container" class="relative w-full max-w-[380px] h-[480px] cursor-pointer" style="perspective: 1000px;">
+              <div id="tilt-card" class="w-full h-full glass-panel rounded-2xl relative overflow-hidden flex flex-col p-6 shadow-[0_0_50px_rgba(0,240,255,0.05)] border-white/10 transition-all duration-300 flex flex-col justify-between" style="transform-style: preserve-3d;">
+                <!-- Glowing flares -->
+                <div id="tilt-flare" class="absolute w-64 h-64 bg-gradient-to-tr from-neon-blue/25 to-neon-purple/25 rounded-full blur-[45px] pointer-events-none" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                
+                <div class="relative z-10 flex flex-col h-full justify-between pointer-events-none" style="transform: translateZ(50px);">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-neon-blue px-2.5 py-1 rounded-full bg-neon-blue/10 border border-neon-blue/20">
+                      Active Member
+                    </span>
+                    <div class="w-2.5 h-2.5 rounded-full bg-[#00ff66] animate-pulse"></div>
+                  </div>
+
+                  <div class="my-auto flex flex-col items-center justify-center py-6">
+                    <div class="relative w-40 h-40 rounded-full flex items-center justify-center p-[2px] bg-gradient-to-tr from-neon-blue via-neon-purple to-neon-pink shadow-[0_0_30px_rgba(189,0,255,0.25)] mb-6">
+                      <div class="w-full h-full rounded-full bg-[#030014] overflow-hidden flex items-center justify-center relative">
+                        <img src="assets/nasum_profile.jpg" alt="Nasum Mohasin" class="w-full h-full object-cover object-top" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#030014]/60 via-transparent to-transparent"></div>
+                      </div>
+                    </div>
+
+                    <h3 class="font-display font-bold text-2xl tracking-wide text-white">Nasum Mohasin</h3>
+                    <p class="font-sans text-xs tracking-wider text-slate-400 mt-1">Anantapur, Andhra Pradesh</p>
+                  </div>
+
+                  <div class="border-t border-white/5 pt-4 flex flex-wrap gap-2 justify-center">
+                    <span class="text-[10px] font-medium font-display tracking-widest text-slate-300 bg-white/5 px-3 py-1 rounded-md">GRAPHICS</span>
+                    <span class="text-[10px] font-medium font-display tracking-widest text-slate-300 bg-white/5 px-3 py-1 rounded-md">REELS EDITING</span>
+                    <span class="text-[10px] font-medium font-display tracking-widest text-slate-300 bg-white/5 px-3 py-1 rounded-md">AI ART</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Marquee -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/5 bg-[#030014]/50 backdrop-blur-sm py-4 z-20">
+          <div class="flex whitespace-nowrap animate-marquee">
+            <div class="flex items-center gap-8 px-4 text-slate-400 text-xs sm:text-sm font-display uppercase tracking-[0.3em]">
+              <span>Graphic Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Mobile Video Editor</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-purple"></span>
+              <span>Creative Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-pink"></span>
+              <span>AI Content Creator</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Graphic Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Mobile Video Editor</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-purple"></span>
+              <span>Creative Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-pink"></span>
+              <span>AI Content Creator</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+            </div>
+            <div class="flex items-center gap-8 px-4 text-slate-400 text-xs sm:text-sm font-display uppercase tracking-[0.3em]">
+              <span>Graphic Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Mobile Video Editor</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-purple"></span>
+              <span>Creative Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-pink"></span>
+              <span>AI Content Creator</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Graphic Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+              <span>Mobile Video Editor</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-purple"></span>
+              <span>Creative Designer</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-pink"></span>
+              <span>AI Content Creator</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. About Section -->
+      <section id="about" class="relative py-24 bg-[#030014] overflow-hidden">
+        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-72 h-72 bg-neon-purple/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-0 -translate-y-1/2 w-80 h-80 bg-neon-blue/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+              <i data-lucide="compass" class="w-3.5 h-3.5 text-neon-purple"></i>
+              <span class="font-display font-medium text-xs tracking-wider text-slate-300">Who I Am</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+              Crafting the Next-Gen Digital Aesthetics
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-slate-400 leading-relaxed">
+              I am a multi-disciplinary creator specialized in graphic design, high-tempo video production, and social branding. Based in Anantapur, I collaborate globally to turn flat media into immersive digital stories.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-5 space-y-6 text-left">
+              <h3 class="font-display font-bold text-xl sm:text-2xl text-white">Creative Vision &amp; Practical Execution</h3>
+              <p class="font-sans text-sm sm:text-base text-slate-300 leading-relaxed">
+                Design is more than just colors on a page—it's how a brand speaks to its audience. Over the years, I've developed a workflow that merges standard design philosophy with bleeding-edge AI generation.
+              </p>
+              <p class="font-sans text-sm sm:text-base text-slate-300 leading-relaxed">
+                When it comes to video editing, my focus is mobile workflows—crafting ultra-fast cuts, kinetic typography, and audio transitions optimized specifically for Reels, YouTube Shorts, and TikTok.
+              </p>
+
+              <div class="grid grid-cols-2 gap-4 pt-4">
+                <div class="p-4 rounded-xl glass-panel border-white/5">
+                  <span class="font-display font-bold text-lg text-neon-blue">India</span>
+                  <p class="font-sans text-xs text-slate-400 mt-1 uppercase tracking-wider">Base Location</p>
+                </div>
+                <div class="p-4 rounded-xl glass-panel border-white/5">
+                  <span class="font-display font-bold text-lg text-neon-purple">24/7</span>
+                  <p class="font-sans text-xs text-slate-400 mt-1 uppercase tracking-wider">Online Collaboration</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skills grid -->
+            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Skill 1 -->
+              <div class="p-5 rounded-2xl glass-panel hover:bg-white/[0.05] hover:border-neon-blue/50 duration-300 flex flex-col items-start text-left relative overflow-hidden group shadow-[0_10px_30px_-15px_rgba(0,240,255,0.15)]">
+                <div class="p-3 rounded-xl bg-gradient-to-tr from-neon-blue to-cyan-500 bg-opacity-10 mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                  <i data-lucide="palette" class="w-5 h-5 text-white"></i>
+                </div>
+                <h4 class="font-display font-bold text-base text-white mb-2">Graphic Design</h4>
+                <p class="font-sans text-xs text-slate-400 leading-relaxed">
+                  Crafting brand identities, brochures, posters, and flyers with balanced layouts.
+                </p>
+              </div>
+
+              <!-- Skill 2 -->
+              <div class="p-5 rounded-2xl glass-panel hover:bg-white/[0.05] hover:border-neon-purple/50 duration-300 flex flex-col items-start text-left relative overflow-hidden group shadow-[0_10px_30px_-15px_rgba(189,0,255,0.15)]">
+                <div class="p-3 rounded-xl bg-gradient-to-tr from-neon-purple to-indigo-600 bg-opacity-10 mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                  <i data-lucide="video" class="w-5 h-5 text-white"></i>
+                </div>
+                <h4 class="font-display font-bold text-base text-white mb-2">Mobile Video Editing</h4>
+                <p class="font-sans text-xs text-slate-400 leading-relaxed">
+                  Creating high-energy vertical reels, vlogs, and commercials directly on mobile platforms.
+                </p>
+              </div>
+
+              <!-- Skill 3 -->
+              <div class="p-5 rounded-2xl glass-panel hover:bg-white/[0.05] hover:border-neon-pink/50 duration-300 flex flex-col items-start text-left relative overflow-hidden group shadow-[0_10px_30px_-15px_rgba(255,0,122,0.15)]">
+                <div class="p-3 rounded-xl bg-gradient-to-tr from-neon-pink to-rose-600 bg-opacity-10 mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                  <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
+                </div>
+                <h4 class="font-display font-bold text-base text-white mb-2">Social Media Design</h4>
+                <p class="font-sans text-xs text-slate-400 leading-relaxed">
+                  Optimizing post engagement with scroll-stopping grid tiles, carousels, and stories.
+                </p>
+              </div>
+
+              <!-- Skill 4 -->
+              <div class="p-5 rounded-2xl glass-panel hover:bg-white/[0.05] hover:border-amber-400/50 duration-300 flex flex-col items-start text-left relative overflow-hidden group shadow-[0_10px_30px_-15px_rgba(251,191,36,0.15)]">
+                <div class="p-3 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 bg-opacity-10 mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                  <i data-lucide="pen-tool" class="w-5 h-5 text-white"></i>
+                </div>
+                <h4 class="font-display font-bold text-base text-white mb-2">Poster Design</h4>
+                <p class="font-sans text-xs text-slate-400 leading-relaxed">
+                  High-concept movie, event, and advertising posters with dramatic grading and compositions.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Portfolio Section -->
+      <section id="portfolio" class="relative py-24 bg-[#030014] overflow-hidden">
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-neon-blue/5 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-[10%] left-[-10%] w-80 h-80 bg-neon-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div class="max-w-2xl text-left">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-neon-blue"></i>
+                <span class="font-display font-medium text-xs tracking-wider text-slate-300">Selected Works</span>
+              </div>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+                Immersive Project Gallery
+              </h2>
+              <p class="font-sans text-sm sm:text-base text-slate-400">
+                Click any project to inspect its layout details or view the full interactive files on Behance.
+              </p>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex gap-3 justify-start">
+              <button id="carousel-prev" class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-neon-blue hover:text-dark-bg hover:border-neon-blue transition-all duration-300">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+              </button>
+              <button id="carousel-next" class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-neon-purple hover:text-white hover:border-neon-purple transition-all duration-300">
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Carousel Grid -->
+          <div id="project-carousel" class="flex gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar scroll-smooth" style="perspective: 1200px;">
+            <!-- Card 1 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="1">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/glowria_branding.png" alt="Glowria Full Branding" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Branding
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Glowria Skincare Branding</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Full brand identity system including letterheads, lanyards, laptop web mockup, and mobile interface design in a premium natural olive palette.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="2">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/logo_grid.png" alt="Corporate Logo Grid" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Graphics
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Minimalist Logo Collection</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Grid showcase of 12 creative corporate geometric vector logos (Avenix, Altura, Carewell, Syncora, Prolix, etc.) using modern flat elements.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="3">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/revapure_logo.png" alt="Revapure Logo Design" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Graphics
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Revapure Logo Design</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Organic brand mark blending the letter 'R' with a stylized leaf shape. Showcases precise curve rendering, balance, and modern corporate palette choices.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="4">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/glowria_anatomy.png" alt="Glowria Logo Anatomy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Graphics
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Glowria Logo Anatomy</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Detailed vector design blueprint detailing negative spacing, custom font rules, color psychology, and geometric shapes used in construction.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="5">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/packaging_showcase.jpg" alt="Packaging Designs Showcase" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Posters
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Modern Product Packaging</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Fidelity product render collection covering organic walnuts pouch (Nutrava), carbonated rose can (Fruitza), cosmetics (Lumora), and energy bars (Fuelora).</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="6">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/instagram_posters_grid.jpg" alt="Instagram Posters Grid" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Social Media
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Instagram Posters Grid</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Collection of 10 modern engagement-driven Instagram designs covering recruitment, food, travel, corporate events, and coffee mockups.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="project-card min-w-[280px] sm:min-w-[340px] md:min-w-[380px] snap-start bg-dark-card glass-panel rounded-2xl overflow-hidden border-white/5 flex flex-col shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group cursor-pointer" data-id="7">
+              <div class="relative h-56 w-full overflow-hidden">
+                <div class="absolute inset-0 bg-[#030014]/10 z-10 transition-opacity duration-300 group-hover:bg-[#030014]/40"></div>
+                <img src="assets/social_media_branding_mockup.jpg" alt="Social Branding Mockup" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span class="absolute top-4 left-4 z-20 text-[10px] font-display font-semibold tracking-wider uppercase bg-[#030014]/80 text-neon-blue border border-neon-blue/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Social Media
+                </span>
+                <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
+                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-neon-blue transition-colors">Social Branding Mockup</h3>
+                  <p class="font-sans text-xs text-slate-400 leading-relaxed">Integrated visual content layout system showing phone screen feeds alongside a printed scroll banner displaying streetwear brand assets.</p>
+                </div>
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <span>Creative Asset</span>
+                  <span class="text-neon-purple group-hover:underline flex items-center gap-1">View Details <i data-lucide="external-link" class="w-3 h-3"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Behance Callout -->
+          <div class="mt-16 p-8 rounded-2xl glass-panel border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_15px_35px_rgba(0,240,255,0.02)] relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-[4px] h-full bg-gradient-to-b from-neon-blue to-neon-purple"></div>
+            <div class="text-left max-w-xl">
+              <h3 class="font-display font-bold text-lg text-white mb-1.5">Want to see my full portfolio book?</h3>
+              <p class="font-sans text-sm text-slate-400">
+                My most comprehensive graphic designs, social banners, and high-fidelity video projects are organized inside Behance.
+              </p>
+            </div>
+            <a href="https://www.behance.net/gallery/251407111/Graphic-Design-Portfolio" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all duration-300 group">
+              Explore Behance <i data-lucide="external-link" class="w-3.5 h-3.5 text-neon-blue group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 6. Services Section -->
+      <section id="services" class="relative py-24 bg-[#030014] overflow-hidden">
+        <div class="absolute top-[30%] left-[-15%] w-96 h-96 bg-neon-purple/5 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-[20%] right-[-10%] w-80 h-80 bg-neon-pink/5 rounded-full blur-[110px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <div class="text-center max-w-2xl mx-auto mb-20">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+              <i data-lucide="flame" class="w-3.5 h-3.5 text-neon-pink"></i>
+              <span class="font-display font-medium text-xs tracking-wider text-slate-300">Creative Services</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+              High-Impact Visual Solutions
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-slate-400 leading-relaxed">
+              I deliver targeted digital design and mobile post-production support designed to elevate your content output.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div class="p-8 rounded-2xl glass-panel border-white/5 bg-dark-card flex flex-col justify-between text-left transition-all duration-500 relative group cursor-default overflow-hidden hover:border-neon-blue/50 hover:shadow-[0_0_25px_rgba(0,240,255,0.1)]">
+              <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/20 transition-all"></div>
+              <div>
+                <div class="flex items-center justify-between mb-8">
+                  <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all">
+                    <i data-lucide="image" class="w-6 h-6 text-white"></i>
+                  </div>
+                  <span class="font-display font-black text-4xl text-white/5 group-hover:text-white/10 transition-colors">01</span>
+                </div>
+                <h3 class="font-display font-bold text-xl text-white mb-3">Poster Design</h3>
+                <p class="font-sans text-sm text-slate-400 leading-relaxed mb-6">
+                  High-concept movie posters, event banners, and commercial advertising materials featuring dynamic composite lighting and professional grade color corrections.
+                </p>
+              </div>
+              <ul class="border-t border-white/5 pt-6 space-y-2.5">
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#00f0ff] transition-colors"></div>High-resolution print files</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#00f0ff] transition-colors"></div>Advanced image manipulation</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#00f0ff] transition-colors"></div>Custom text styles</li>
+              </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="p-8 rounded-2xl glass-panel border-white/5 bg-dark-card flex flex-col justify-between text-left transition-all duration-500 relative group cursor-default overflow-hidden hover:border-neon-purple/50 hover:shadow-[0_0_25px_rgba(189,0,255,0.1)]">
+              <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/20 transition-all"></div>
+              <div>
+                <div class="flex items-center justify-between mb-8">
+                  <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all">
+                    <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+                  </div>
+                  <span class="font-display font-black text-4xl text-white/5 group-hover:text-white/10 transition-colors">02</span>
+                </div>
+                <h3 class="font-display font-bold text-xl text-white mb-3">Social Media Posts</h3>
+                <p class="font-sans text-sm text-slate-400 leading-relaxed mb-6">
+                  Engagement-driven post designs, seamless multi-slide carousels, and modern feed templates tailored to maximize visibility and establish visual identity.
+                </p>
+              </div>
+              <ul class="border-t border-white/5 pt-6 space-y-2.5">
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#bd00ff] transition-colors"></div>Brand asset adaptation</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#bd00ff] transition-colors"></div>Scroll-stopping grids</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#bd00ff] transition-colors"></div>Story layouts included</li>
+              </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="p-8 rounded-2xl glass-panel border-white/5 bg-dark-card flex flex-col justify-between text-left transition-all duration-500 relative group cursor-default overflow-hidden hover:border-neon-pink/50 hover:shadow-[0_0_25px_rgba(255,0,122,0.1)]">
+              <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/20 transition-all"></div>
+              <div>
+                <div class="flex items-center justify-between mb-8">
+                  <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all">
+                    <i data-lucide="film" class="w-6 h-6 text-white"></i>
+                  </div>
+                  <span class="font-display font-black text-4xl text-white/5 group-hover:text-white/10 transition-colors">03</span>
+                </div>
+                <h3 class="font-display font-bold text-xl text-white mb-3">Reels Editing</h3>
+                <p class="font-sans text-sm text-slate-400 leading-relaxed mb-6">
+                  Kinetic typography, rapid beat cuts, and trend-focused transitions optimized specifically for Instagram Reels, YouTube Shorts, and high-impact TikTok promotions.
+                </p>
+              </div>
+              <ul class="border-t border-white/5 pt-6 space-y-2.5">
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#ff007a] transition-colors"></div>Mobile workflow assets</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#ff007a] transition-colors"></div>Rhythmic sound design</li>
+                <li class="flex items-center gap-2.5 text-xs text-slate-300"><div class="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-[#ff007a] transition-colors"></div>Dynamic color grading</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Contact Section -->
+      <section id="contact" class="relative py-24 bg-[#030014] overflow-hidden">
+        <div class="absolute top-[10%] right-[-10%] w-96 h-96 bg-neon-blue/5 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-[10%] left-[-15%] w-80 h-80 bg-neon-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
+              <i data-lucide="message-square" class="w-3.5 h-3.5 text-neon-blue"></i>
+              <span class="font-display font-medium text-xs tracking-wider text-slate-300">Get In Touch</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+              Start A New Project Together
+            </h2>
+            <p class="font-sans text-sm sm:text-base text-slate-400 leading-relaxed">
+              Have an idea for a logo, a cinematic reel edit, or social post designs? Leave a message or write directly on WhatsApp.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <!-- Direct Info -->
+            <div class="lg:col-span-5 space-y-8 text-left">
+              <div class="space-y-4">
+                <h3 class="font-display font-bold text-xl sm:text-2xl text-white">Contact Information</h3>
+                <p class="font-sans text-sm text-slate-400 leading-relaxed">
+                  Reach out using the form, or initiate a direct chat. I'll get back to you within 12 hours.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <div class="w-10 h-10 rounded-lg bg-neon-blue/10 flex items-center justify-center border border-neon-blue/20">
+                    <i data-lucide="mail" class="w-4 h-4 text-neon-blue"></i>
+                  </div>
+                  <div>
+                    <span class="font-sans text-[10px] uppercase tracking-wider text-slate-400">Email Me</span>
+                    <p class="font-sans text-sm font-semibold text-white mt-0.5">nasum.mohasin@gmail.com</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <div class="w-10 h-10 rounded-lg bg-neon-purple/10 flex items-center justify-center border border-neon-purple/20">
+                    <i data-lucide="phone" class="w-4 h-4 text-neon-purple"></i>
+                  </div>
+                  <div>
+                    <span class="font-sans text-[10px] uppercase tracking-wider text-slate-400">Call Me</span>
+                    <p class="font-sans text-sm font-semibold text-white mt-0.5">+91 6305681693</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <div class="w-10 h-10 rounded-lg bg-neon-pink/10 flex items-center justify-center border border-neon-pink/20">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-neon-pink"></i>
+                  </div>
+                  <div>
+                    <span class="font-sans text-[10px] uppercase tracking-wider text-slate-400">Location</span>
+                    <p class="font-sans text-sm font-semibold text-white mt-0.5">Anantapur, Andhra Pradesh, India</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WhatsApp Box -->
+              <div class="p-6 rounded-2xl glass-panel border-white/5 bg-[#25D366]/5 shadow-[0_15px_30px_rgba(37,211,102,0.03)] text-left relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/10 rounded-full blur-xl pointer-events-none"></div>
+                <h4 class="font-display font-bold text-base text-white mb-2 flex items-center gap-2">
+                  <i data-lucide="message-circle" class="w-5 h-5 text-[#25D366]"></i> Fast WhatsApp Chat
+                </h4>
+                <p class="font-sans text-xs text-slate-400 leading-relaxed mb-6">
+                  Skip the email forms and start talking to me directly about your video requirements or graphic drafts.
+                </p>
+                <a href="https://wa.me/916305681693?text=Hi%20Nasum%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project!" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-sans text-xs font-bold tracking-widest uppercase transition-colors shadow-[0_0_20px_rgba(37,211,102,0.3)] flex items-center justify-center gap-2">
+                  Send Message
+                </a>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <div class="lg:col-span-7 w-full text-left">
+              <form id="contact-form" class="w-full glass-panel border-white/5 rounded-2xl p-6 sm:p-8 space-y-5 bg-dark-card shadow-[0_15px_35px_rgba(0,0,0,0.4)]">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div class="flex flex-col gap-2">
+                    <label class="font-sans text-xs font-semibold text-slate-300 uppercase tracking-wider">Full Name</label>
+                    <input type="text" required class="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-neon-blue focus:ring-1 focus:ring-neon-blue transition-all" placeholder="Enter your name" />
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <label class="font-sans text-xs font-semibold text-slate-300 uppercase tracking-wider">Email Address</label>
+                    <input type="email" required class="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-neon-blue focus:ring-1 focus:ring-neon-blue transition-all" placeholder="name@company.com" />
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="font-sans text-xs font-semibold text-slate-300 uppercase tracking-wider">Subject Title</label>
+                  <input type="text" required class="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-neon-blue focus:ring-1 focus:ring-neon-blue transition-all" placeholder="What's this project about?" />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="font-sans text-xs font-semibold text-slate-300 uppercase tracking-wider">Your Message</label>
+                  <textarea required rows="5" class="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-neon-blue focus:ring-1 focus:ring-neon-blue transition-all resize-none" placeholder="Detail your requirements here..."></textarea>
+                </div>
+
+                <div id="form-success" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-sans text-xs">
+                  Message sent successfully! I will reach out soon.
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink text-white font-sans text-xs font-bold tracking-widest uppercase hover:shadow-[0_0_25px_rgba(189,0,255,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer">
+                  Send Enquiry <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 8. Footer Section -->
+    <footer class="relative bg-[#030014] border-t border-white/5 pt-16 pb-8 overflow-hidden z-20">
+      <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center">
+        
+        <div class="w-full flex flex-col md:flex-row items-center justify-between gap-8 pb-12 border-b border-white/5">
+          <div class="text-left flex flex-col items-start gap-2">
+            <h4 class="font-display font-bold text-lg text-white tracking-widest uppercase">Nasum Mohasin</h4>
+            <p class="font-sans text-xs text-slate-400">Creative Graphic Designer &amp; Mobile Video Editor • Anantapur, AP</p>
+          </div>
+
+          <!-- Socials -->
+          <div class="flex items-center gap-4">
+            <a href="https://www.behance.net/gallery/251407111/Graphic-Design-Portfolio" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-neon-blue hover:border-neon-blue hover:bg-neon-blue/10 transition-all duration-300">
+              <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M8.22 7.72H5.06v8.56h3.11c1.55 0 2.8-.75 2.8-2.22s-1.07-2.07-2.43-2.1c1.19-.13 2.05-.72 2.05-1.99 0-1.39-1.09-2.25-2.37-2.25zM7.56 9.47c.56 0 1 .28 1 .84 0 .56-.44.84-1 .84H6.38V9.47h1.18zm.13 3.38c.61 0 1.09.33 1.09.95s-.48.97-1.09.97H6.38V12.85h1.31zm10.76-1.57c-1.63 0-2.88 1.06-2.88 2.72 0 1.73 1.15 2.76 2.82 2.76 1.48 0 2.45-.72 2.68-1.74h-1.36c-.16.39-.62.77-1.32.77-.81 0-1.33-.51-1.42-1.28h4.21c.07-2.06-1.06-3.23-2.73-3.23zm-.06 1.11c.71 0 1.18.42 1.25 1.06h-2.52c.07-.64.51-1.06 1.27-1.06zm-1.49-3.21h3.11v1.03h-3.11z" /></svg>
+            </a>
+            <a href="https://wa.me/916305681693" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366]/10 transition-all duration-300">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+            <a href="mailto:nasum.mohasin@gmail.com" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-neon-pink hover:border-neon-pink hover:bg-neon-pink/10 transition-all duration-300">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="w-full pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-500">
+          <div class="flex items-center gap-2">
+            <i data-lucide="award" class="w-3.5 h-3.5 text-neon-blue"></i>
+            <span>&copy; <span id="year"></span> Nasum Mohasin. All rights reserved.</span>
+          </div>
+          <div class="flex items-center gap-6">
+            <span class="font-sans text-[10px] tracking-wide text-slate-600 uppercase">Built with HTML5 • Tailwind • Three.js</span>
+            <button id="to-top" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-neon-blue hover:text-neon-blue flex items-center justify-center transition-all duration-300">
+              <i data-lucide="arrow-up" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Project Detail Modal (Preview popup) -->
+  <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div class="w-full max-w-2xl bg-[#09051d] border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,240,255,0.1)] relative">
+      <div class="relative h-64 sm:h-80 w-full">
+        <img id="modal-img" src="" alt="Project" class="w-full h-full object-cover" />
+        <button id="modal-close" class="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">✕</button>
+      </div>
+      <div class="p-6 sm:p-8 text-left">
+        <span id="modal-cat" class="text-[10px] font-display font-semibold tracking-wider text-neon-blue bg-neon-blue/10 border border-neon-blue/20 px-3 py-1 rounded-full uppercase">Category</span>
+        <h3 id="modal-title" class="font-display font-bold text-2xl text-white mt-4 mb-3">Project Title</h3>
+        <p id="modal-desc" class="font-sans text-sm text-slate-300 leading-relaxed mb-6">Description content</p>
+        <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-white/5">
+          <a href="https://www.behance.net/gallery/251407111/Graphic-Design-Portfolio" target="_blank" class="flex-1 text-center py-3.5 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-white font-sans text-xs font-semibold tracking-wider uppercase hover:shadow-[0_0_20px_rgba(189,0,255,0.3)] transition-all">
+            Launch on Behance
+          </a>
+          <button id="modal-btn-close" class="flex-1 py-3.5 rounded-xl border border-white/10 hover:bg-white/5 text-slate-300 font-sans text-xs font-semibold tracking-wider uppercase">
+            Close Preview
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Set Copyright Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 1. Preloader Progress logic
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 8) + 4;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(progressInterval);
+        
+        // Hide preloader
+        setTimeout(() => {
+          const preloader = document.getElementById('preloader');
+          const appContent = document.getElementById('app-content');
+          preloader.style.opacity = '0';
+          appContent.classList.remove('hidden');
+          
+          setTimeout(() => {
+            preloader.classList.add('hidden');
+          }, 700);
+        }, 300);
+      }
+      document.getElementById('loader-progress').style.width = progress + '%';
+      document.getElementById('loader-percent').textContent = progress + '%';
+    }, 80);
+
+    // 2. Scroll event for sticky glass navbar
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.remove('py-6', 'bg-transparent');
+        navbar.classList.add('py-4', 'bg-[#030014]/65', 'backdrop-blur-md', 'border-b', 'border-white/5');
+      } else {
+        navbar.classList.add('py-6', 'bg-transparent');
+        navbar.classList.remove('py-4', 'bg-[#030014]/65', 'backdrop-blur-md', 'border-b', 'border-white/5');
+      }
+    });
+
+    // 3. Mobile Navigation toggle
+    const toggleBtn = document.getElementById('mobile-toggle');
+    const drawer = document.getElementById('mobile-drawer');
+    toggleBtn.addEventListener('click', () => {
+      drawer.classList.toggle('hidden');
+    });
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.add('hidden');
+      });
+    });
+
+    // 4. Interactive Particles Web Background
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const mouse = { x: null, y: null, radius: 120 };
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.baseSize = Math.random() * 2 + 1;
+        this.size = this.baseSize;
+        this.color = Math.random() > 0.5 ? '189, 0, 255' : '0, 240, 255';
+        this.opacity = Math.random() * 0.4 + 0.15;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const angle = Math.atan2(dy, dx);
+            this.x -= Math.cos(angle) * force * 1.5;
+            this.y -= Math.sin(angle) * force * 1.5;
+            this.size = this.baseSize * (1 + force * 1.5);
+          } else {
+            this.size = this.baseSize;
+          }
+        } else {
+          this.size = this.baseSize;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    const particles = [];
+    const count = Math.min(Math.floor((width * height) / 12000), 80);
+    for (let i = 0; i < count; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            const alpha = ((130 - dist) / 130) * 0.08;
+            ctx.strokeStyle = `rgba(189, 0, 255, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 5. Three.js Floating 3D Shapes (Hero Backdrop)
+    if (window.innerWidth >= 768) {
+      const container = document.getElementById('hero-three-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.z = 5;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+
+      // Light
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+      const pointLight1 = new THREE.PointLight(0xbd00ff, 1.5, 50);
+      pointLight1.position.set(-10, -10, -5);
+      scene.add(pointLight1);
+      const pointLight2 = new THREE.PointLight(0x00f0ff, 1.8, 50);
+      pointLight2.position.set(10, -10, 5);
+      scene.add(pointLight2);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+
+      // Torus
+      const torusGeo = new THREE.TorusGeometry(0.7, 0.22, 16, 100);
+      const torusMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, roughness: 0.1, metalness: 0.8 });
+      const torus = new THREE.Mesh(torusGeo, torusMat);
+      torus.position.set(-2.2, 1.2, -1);
+      scene.add(torus);
+
+      // Sphere
+      const sphereGeo = new THREE.SphereGeometry(0.65, 32, 32);
+      const sphereMat = new THREE.MeshStandardMaterial({ color: 0xbd00ff, roughness: 0.2, metalness: 0.9 });
+      const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+      sphere.position.set(2.2, -1.2, 0);
+      scene.add(sphere);
+
+      // Cone
+      const coneGeo = new THREE.ConeGeometry(0.45, 0.9, 4);
+      const coneMat = new THREE.MeshStandardMaterial({ color: 0xff007a, roughness: 0.1, metalness: 0.8 });
+      const cone = new THREE.Mesh(coneGeo, coneMat);
+      cone.position.set(1.8, 1.6, -1.5);
+      scene.add(cone);
+
+      let time = 0;
+      function animateThree() {
+        time += 0.01;
+        
+        // Torus floats & rotates
+        torus.rotation.x = time * 0.5;
+        torus.rotation.y = time * 0.3;
+        torus.position.y = 1.2 + Math.sin(time) * 0.15;
+
+        // Sphere floats & pulses wobbly size
+        sphere.rotation.y = time * 0.2;
+        sphere.position.y = -1.2 + Math.cos(time * 0.8) * 0.12;
+        const scaleVal = 1 + Math.sin(time * 2.5) * 0.05;
+        sphere.scale.set(scaleVal, scaleVal, scaleVal);
+
+        // Cone floats & spins
+        cone.rotation.x = time * 0.6;
+        cone.rotation.z = time * 0.4;
+        cone.position.y = 1.6 + Math.sin(time * 1.2) * 0.1;
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animateThree);
+      }
+      animateThree();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+    }
+
+    // 6. Interactive 3D tilt card
+    const tiltContainer = document.getElementById('tilt-card-container');
+    const tiltCard = document.getElementById('tilt-card');
+    const tiltFlare = document.getElementById('tilt-flare');
+
+    tiltContainer.addEventListener('mousemove', (e) => {
+      const rect = tiltContainer.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      tiltCard.style.transform = `rotateX(${-y * 22}deg) rotateY(${x * 22}deg)`;
+      
+      // Move flare spot
+      const flareX = (1 - (x + 0.5)) * 100;
+      const flareY = (1 - (y + 0.5)) * 100;
+      tiltFlare.style.left = `${flareX}%`;
+      tiltFlare.style.top = `${flareY}%`;
+    });
+
+    tiltContainer.addEventListener('mouseleave', () => {
+      tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      tiltFlare.style.left = '50%';
+      tiltFlare.style.top = '50%';
+    });
+
+    // 7. Carousel Scrolling logic
+    const carousel = document.getElementById('project-carousel');
+    document.getElementById('carousel-prev').addEventListener('click', () => {
+      carousel.scrollBy({ left: -380, behavior: 'smooth' });
+    });
+    document.getElementById('carousel-next').addEventListener('click', () => {
+      carousel.scrollBy({ left: 380, behavior: 'smooth' });
+    });
+
+    // 8. Project details Modal integration
+    const projectDetails = {
+      1: {
+        title: 'Glowria Skincare Branding',
+        cat: 'Branding',
+        desc: 'Full brand identity system featuring letterheads, corporate envelope, identity card, lanyards, smartphone configurations, and desktop browser mockup. Employs a premium organic forest green color scheme to represent natural toxin-free ingredients.',
+        img: 'assets/glowria_branding.png'
+      },
+      2: {
+        title: 'Minimalist Logo Collection',
+        cat: 'Graphics',
+        desc: 'Grid layout detailing 12 modern corporate geometric vector logos (Avenix, Greenova, Altura, Bluevant, Carewell, Prolix, Belora, Naturox, Mystiq, Syncora, Vitacare, Finovex). Each logo showcases unique graphic geometry and typography.',
+        img: 'assets/logo_grid.png'
+      },
+      3: {
+        title: 'Revapure Logo Design',
+        cat: 'Graphics',
+        desc: 'Sleek brand identity logo blending the letter R with a stylized leaf element. Promotes organic connection and natural wellness through minimalist vector curves and dark blue / teal accents.',
+        img: 'assets/revapure_logo.png'
+      },
+      4: {
+        title: 'Glowria Logo Anatomy',
+        cat: 'Graphics',
+        desc: 'Brand guidelines blueprint mapping negative spacing constraints, rounded sans-serif custom typefaces, green color psychology definitions, and leaf geometry structures representing growth and safety.',
+        img: 'assets/glowria_anatomy.png'
+      },
+      5: {
+        title: 'Modern Product Packaging',
+        cat: 'Posters',
+        desc: 'Fidelity product rendering showcase. Covers design wraps for organic walnuts pouch (Nutrava), rose lychee sparkling water can (Fruitza), paneer tikka masala box (Masalaah), facial skincare tube (Lumora), and chocolate almond energy bar (Fuelora).',
+        img: 'assets/packaging_showcase.jpg'
+      },
+      6: {
+        title: 'Instagram Posters Grid',
+        cat: 'Social Media',
+        desc: 'Curated collection of 10 modern, high-engagement Instagram poster ads. Spans recruitment flyers, travel agency posts, burger ads, web banner mockups, sales promotions, real estate listings, fitness graphics, and coffee branding.',
+        img: 'assets/instagram_posters_grid.jpg'
+      },
+      7: {
+        title: 'Social Branding Mockup',
+        cat: 'Social Media',
+        desc: 'Immersive branding presentation displaying street banners, scrolling smartphone UI layouts, and grid layouts demonstrating comprehensive social content strategies and modern corporate asset designs.',
+        img: 'assets/social_media_branding_mockup.jpg'
+      }
+    };
+
+    const modal = document.getElementById('project-modal');
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        const proj = projectDetails[id];
+        if (proj) {
+          document.getElementById('modal-img').src = proj.img;
+          document.getElementById('modal-title').textContent = proj.title;
+          document.getElementById('modal-cat').textContent = proj.cat;
+          document.getElementById('modal-desc').textContent = proj.desc;
+          modal.classList.remove('hidden');
+        }
+      });
+    });
+
+    const closeModal = () => modal.classList.add('hidden');
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-btn-close').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // 9. Contact Form success & Confetti trigger
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const btn = e.target.querySelector('button[type="submit"]');
+      const success = document.getElementById('form-success');
+      btn.disabled = true;
+      btn.textContent = 'Sending Message...';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Send Enquiry <i data-lucide="send" class="w-3.5 h-3.5"></i>';
+        lucide.createIcons();
+        success.classList.remove('hidden');
+        
+        // Confetti
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#00f0ff', '#bd00ff', '#ff007a', '#ffffff'],
+        });
+
+        e.target.reset();
+
+        setTimeout(() => success.classList.add('hidden'), 5000);
+      }, 1200);
+    });
+
+    // 10. Scroll to top button
+    const toTopBtn = document.getElementById('to-top');
+    toTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
